@@ -41,3 +41,9 @@ variable "proxysql_count" {
   type        = "string"
   default     = "1"
 }
+
+variable "mysql_count" {
+  description = "Number of instances for MySQL"
+  type        = "string"
+  default     = "1"
+}

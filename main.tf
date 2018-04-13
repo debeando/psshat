@@ -40,3 +40,15 @@ module "proxysql" {
   count        = "${var.proxysql_count}"
   subnet_ids   = ["${module.vpc.private_subnet_ids}"]
 }
+
+module "mysql" {
+  version      = "0.0.1"
+  source       = "modules/mysql"
+  aws_vpc_id   = "${module.vpc.id}"
+  aws_ami      = "${var.aws_ami}"
+  aws_key_name = "${var.aws_key_name}"
+  project      = "${var.project}"
+  env          = "${var.env}"
+  count        = "${var.mysql_count}"
+  subnet_ids   = ["${module.vpc.private_subnet_ids}"]
+}
