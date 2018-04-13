@@ -21,3 +21,8 @@ variable "env" {
 variable "count" {
   description = "Number of instances for ProxySQL"
 }
+
+variable "subnet_ids" {
+  description = "List of private subnets."
+  type        = "list"
+}

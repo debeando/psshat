@@ -21,3 +21,12 @@ variable "project" {
 variable "env" {
   description = "Name of environment: test, qa, staging, sandbox, production, ..."
 }
+
+variable "route_table_id" {
+  description = "Private route table for NAT with bastion instance."
+}
+
+variable "subnet_ids" {
+  description = "List of public subnets."
+  type        = "list"
+}

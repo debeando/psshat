@@ -1,21 +1,10 @@
-data "aws_subnet_ids" "private" {
-  vpc_id = "${var.aws_vpc_id}"
-
-  tags {
-    Name        = "${var.project}-${var.env}-private"
-    Project     = "${var.project}"
-    Environment = "${var.env}"
-    Network     = "private"
-  }
-}
-
 resource "aws_instance" "proxysql" {
   count                  = "${var.count}"
   ami                    = "${var.aws_ami}"
   instance_type          = "t2.micro"
   key_name               = "${var.aws_key_name}"
   user_data              = "${data.template_file.proxysql.rendered}"
-  subnet_id              = "${element(data.aws_subnet_ids.private.ids, count.index)}"
+  subnet_id              = "${element(var.subnet_ids, count.index)}"
   vpc_security_group_ids = [
     "${aws_security_group.proxysql.id}"
   ]

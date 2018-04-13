@@ -1,29 +1,8 @@
-data "aws_subnet_ids" "selected" {
-  vpc_id = "${var.aws_vpc_id}"
-
-  tags {
-    Name        = "${var.project}-${var.env}-public"
-    Project     = "${var.project}"
-    Environment = "${var.env}"
-    Network     = "public"
-  }
-}
-
-data "aws_route_table" "selected" {
-  vpc_id = "${var.aws_vpc_id}"
-
-  tags {
-    Name        = "${var.project}-${var.env}-private"
-    Project     = "${var.project}"
-    Environment = "${var.env}"
-  }
-}
-
 resource "aws_instance" "bastion" {
   ami                    = "${var.aws_ami}"
   instance_type          = "t2.micro"
   key_name               = "${var.aws_key_name}"
-  subnet_id              = "${data.aws_subnet_ids.selected.ids[0]}"
+  subnet_id              = "${var.subnet_ids[0]}"
   source_dest_check      = false
   user_data              = "${data.template_file.bastion.rendered}"
   vpc_security_group_ids = [
@@ -58,7 +37,7 @@ resource "aws_eip" "bastion" {
 }
 
 resource "aws_route" "private_route" {
-  route_table_id         = "${data.aws_route_table.selected.id}"
+  route_table_id         = "${var.route_table_id}"
   destination_cidr_block = "0.0.0.0/0"
   instance_id            = "${aws_instance.bastion.id}"
 }

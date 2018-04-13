@@ -17,14 +17,16 @@ module "vpc" {
 }
 
 module "bastion" {
-  version      = "0.0.1"
-  source       = "modules/bastion"
-  aws_vpc_id   = "${module.vpc.id}"
-  aws_ami      = "${var.aws_ami}"
-  aws_key_name = "${var.aws_key_name}"
-  cidr_block   = "${var.cidr_block}"
-  project      = "${var.project}"
-  env          = "${var.env}"
+  version        = "0.0.1"
+  source         = "modules/bastion"
+  aws_vpc_id     = "${module.vpc.id}"
+  aws_ami        = "${var.aws_ami}"
+  aws_key_name   = "${var.aws_key_name}"
+  cidr_block     = "${var.cidr_block}"
+  project        = "${var.project}"
+  env            = "${var.env}"
+  route_table_id = "${module.vpc.private_route_table_id}"
+  subnet_ids     = ["${module.vpc.public_subnet_ids}"]
 }
 
 module "proxysql" {
@@ -36,4 +38,5 @@ module "proxysql" {
   project      = "${var.project}"
   env          = "${var.env}"
   count        = "${var.proxysql_count}"
+  subnet_ids   = ["${module.vpc.private_subnet_ids}"]
 }
