@@ -46,7 +46,10 @@ data "template_file" "bastion" {
   template = "${file("${path.module}/user_data.sh")}"
 
   vars {
-    cidr_block = "${var.cidr_block}"
+    Project     = "${var.project}"
+    Environment = "${var.env}"
+    Tier        = "bastion"
+    cidr_block  = "${var.cidr_block}"
   }
 }
 
