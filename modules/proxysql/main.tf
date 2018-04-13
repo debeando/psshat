@@ -64,3 +64,43 @@ resource "aws_security_group" "proxysql" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_lb" "proxysql" {
+  name                       = "${var.project}-${var.env}-proxysql"
+  internal                   = true
+  enable_deletion_protection = false
+  load_balancer_type         = "network"
+  subnets                    = ["${var.subnet_ids}"]
+
+  tags {
+    Name        = "${var.project}-${var.env}-proxysql"
+    Project     = "${var.project}"
+    Environment = "${var.env}"
+    Tier        = "proxysql"
+  }
+}
+
+resource "aws_lb_target_group" "proxysql" {
+  name     = "${var.project}-${var.env}-proxysql"
+  port     = 3306
+  protocol = "TCP"
+  vpc_id   = "${var.aws_vpc_id}"
+}
+
+resource "aws_lb_listener" "proxysql" {
+  load_balancer_arn = "${aws_lb.proxysql.arn}"
+  port              = "3306"
+  protocol          = "TCP"
+
+  default_action {
+    target_group_arn = "${aws_lb_target_group.proxysql.arn}"
+    type             = "forward"
+  }
+}
+
+resource "aws_lb_target_group_attachment" "proxysql" {
+  count            = "${var.count}"
+  target_group_arn = "${aws_lb_target_group.proxysql.arn}"
+  target_id        = "${element(aws_instance.proxysql.*.id, count.index)}"
+  port             = 3306
+}
