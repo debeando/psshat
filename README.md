@@ -48,5 +48,5 @@ terraform apply -target module.vpc
 ## Number of instances
 
 ```bash
-terraform apply -target module.proxysql -var 'proxysql.count=2'
+terraform apply -target module.mysql -var 'mysql_count=2'
 ```
