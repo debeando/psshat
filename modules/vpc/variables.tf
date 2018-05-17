@@ -11,7 +11,7 @@ variable "cidr_block" {
 }
 
 variable "project" {
-  description = "Name of global project: zenith, wuaki, ..."
+  description = "Name of global project: Anonymous, Talfin, swapbyt3s, ..."
 }
 
 variable "env" {

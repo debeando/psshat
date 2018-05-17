@@ -47,6 +47,8 @@ module "mysql" {
   aws_vpc_id   = "${module.vpc.id}"
   aws_ami      = "${var.aws_ami}"
   aws_key_name = "${var.aws_key_name}"
+  aws_az       = "${var.aws_az}"
+  aws_region   = "${var.aws_region}"
   project      = "${var.project}"
   env          = "${var.env}"
   count        = "${var.mysql_count}"

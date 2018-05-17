@@ -1,4 +1,7 @@
-# Terraform AWS
+# Percona Server Stack in HA with Terraform AWS
+
+This project work with another [project](https://github.com/swapbyt3s/psshaa)
+to provisioning and configure each instances.
 
 ## Requirements:
 
@@ -20,7 +23,10 @@ custom variables:
 export TF_VAR_aws_region=$AWS_DEFAULT_REGION
 export TF_VAR_aws_key_name=<KEY_NAME>
 export TF_VAR_project=<PROJECT_NAME>
+export TF_VAR_env=<ENV_NAME>
 ```
+
+The TF_VAR_aws_key_name variable without `.pem`.
 
 Initialize a Terraform working directory, download plugins and load modules:
 

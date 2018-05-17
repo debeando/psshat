@@ -32,7 +32,35 @@ data "template_file" "mysql" {
   }
 }
 
+resource "aws_ebs_volume" "data" {
+  count             = "${var.count}"
+  availability_zone = "${var.aws_region}${element(split(",", var.aws_az), count.index)}"
+  size              = 20
+  type              = "gp2"
+
+  lifecycle {
+    ignore_changes = [
+      "size"
+    ]
+  }
+
+  tags {
+    Project     = "${var.project}"
+    Environment = "${var.env}"
+    Tier        = "mysql"
+    Role        = "node"
+  }
+}
+
+resource "aws_volume_attachment" "data" {
+  count       = "${var.count}"
+  device_name = "/dev/xvdf"
+  volume_id   = "${element(aws_ebs_volume.data.*.id, count.index)}"
+  instance_id = "${element(aws_instance.mysql.*.id, count.index)}"
+}
+
 resource "aws_security_group" "mysql" {
+  name        = "${var.project}-${var.env}-mysql"
   description = "Allow SSH & MySQL traffic from VPC"
   vpc_id      = "${var.aws_vpc_id}"
 

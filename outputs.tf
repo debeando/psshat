@@ -9,3 +9,7 @@ output "mysql_ips" {
 output "proxysql_ips" {
   value = "${module.proxysql.ips}"
 }
+
+output "proxysql_nlb" {
+  value = "${module.proxysql.nlb}"
+}

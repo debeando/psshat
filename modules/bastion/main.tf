@@ -54,6 +54,7 @@ data "template_file" "bastion" {
 }
 
 resource "aws_security_group" "bastion" {
+  name        = "${var.project}-${var.env}-bastion"
   description = "Allow SSH traffic from the internet"
   vpc_id      = "${var.aws_vpc_id}"
 

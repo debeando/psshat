@@ -33,6 +33,7 @@ data "template_file" "proxysql" {
 }
 
 resource "aws_security_group" "proxysql" {
+  name        = "${var.project}-${var.env}-proxysql"
   description = "Allow SSH & MySQL traffic from VPC"
   vpc_id      = "${var.aws_vpc_id}"
 

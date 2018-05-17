@@ -10,6 +10,14 @@ variable "aws_key_name" {
   description = "Amazon Key Name"
 }
 
+variable "aws_az" {
+  description = "List of availability zones."
+}
+
+variable "aws_region" {
+  description = "AWS Region."
+}
+
 variable "project" {
   description = "Name of global project: zenith, wuaki, ..."
 }
