@@ -15,7 +15,7 @@ yum -y install git
 
 /usr/bin/pip install --upgrade pip
 /usr/bin/easy_install pip
-/usr/local/bin/pip3.6 install ansible
+/usr/local/bin/pip3 install ansible
 
 mkdir -p /etc/ansible/
 mkdir -p /usr/local/etc/ansible/
