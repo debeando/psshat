@@ -17,5 +17,5 @@ yum -y install git
 mkdir -p /etc/ansible/
 mkdir -p /usr/local/etc/ansible/
 cd /usr/local/etc/ansible/
-git clone https://github.com/swapbyt3s/mysql-ha-ansible.git .
+git clone https://github.com/swapbyt3s/psshaa.git .
 /usr/local/bin/ansible-playbook -i hosts servers.yml
